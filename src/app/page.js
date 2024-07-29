@@ -1,3 +1,4 @@
+import { Signout } from "@/components/Signout";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {
@@ -5,5 +6,5 @@ export default async function Home() {
 
   const { data } = await supabase.auth.getUser();
 
-  return <div>Home page {data?.user?.email}</div>;
+  return <div>Home page {data?.user && <Signout user={data.user} />}</div>;
 }
