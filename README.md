@@ -2,7 +2,14 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, copy `.env.example` into `.env.local` and change the values for SUPABASE api keys
+
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=..
+```
+
+Second, run the development server:
 
 ```bash
 npm run dev
