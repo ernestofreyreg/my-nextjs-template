@@ -1,3 +1,12 @@
+import { PersonForm } from "@/components/PersonForm";
+import { createClient } from "@/utils/supabase/server";
+
 export default function AddPerson() {
-  return <div>Add Person form</div>;
+  const handleCreatePerson = async (data) => {
+    "use server";
+    const supabase = createClient();
+    await supabase.from("persons").insert([data]);
+    redirect("/persons");
+  };
+  return <PersonForm onSave={handleCreatePerson} />;
 }
