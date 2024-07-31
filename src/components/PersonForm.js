@@ -2,19 +2,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { PersonSchema } from "@/services/PersonSchema";
-import { useEffect } from "react";
 import { Input } from "./Input";
+import { Loading } from "./Loading";
 
-export function PersonForm({ onSave }) {
+export function PersonForm({ onSave, isSaving, data, buttonLabel }) {
   const form = useForm({
     resolver: zodResolver(PersonSchema),
+    defaultValues: data,
   });
 
   return (
     <form onSubmit={form.handleSubmit(onSave)}>
       <div className="flex flex-col gap-3 w-6/12 mx-auto p-4 shadow mt-5 rounded">
-        <h1>Add Person</h1>
-
         <div className="flex flex-col">
           <label htmlFor="name">Name</label>
           <Input
@@ -95,10 +94,11 @@ export function PersonForm({ onSave }) {
 
         <div>
           <button
+            disabled={isSaving}
             type="submit"
-            className="bg-sky-500 hover:bg-sky-600 text-white px-2 py-1 rounded"
+            className="flex justify-center w-full bg-sky-500 hover:bg-sky-600 text-white px-2 py-3 rounded"
           >
-            Create Person
+            {isSaving ? <Loading /> : buttonLabel}
           </button>
         </div>
       </div>

@@ -1,30 +1,30 @@
 "use client";
 
-import { PersonForm } from "@/components/PersonForm";
-import { createPerson } from "@/services/createPerson";
-import { revalidatePath } from "next/cache";
-import { useRouter } from "next/navigation";
+import { updatePerson } from "@/services/updatePerson";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { PersonForm } from "./PersonForm";
 
-export default function AddPerson() {
+export function UpdatePerson({ person }) {
   const [isSaving, setIsSaving] = useState(false);
 
   const router = useRouter();
   const handleSave = async (data) => {
     const safeData = { dob: data.dob.toString(), ...data };
     setIsSaving(true);
-    await createPerson(safeData);
+    await updatePerson(person.id, safeData);
     setIsSaving(false);
     router.back();
   };
 
   return (
     <div>
-      <h1 className="text-center text-xl font-semibold mt-5">Add person</h1>
+      <h1 className="text-center text-xl font-semibold mt-5">Update person</h1>
       <PersonForm
         onSave={handleSave}
         isSaving={isSaving}
-        buttonLabel="Create Person"
+        data={person}
+        buttonLabel="Update Person"
       />
     </div>
   );
