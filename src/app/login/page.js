@@ -1,12 +1,9 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
+import { login, signup } from "@/services/auth";
 import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
-  const router = useRouter();
-
   const form = useForm({
     defaultValues: {
       email: "",
@@ -15,29 +12,13 @@ export default function LoginPage() {
   });
 
   const handleLogin = async () => {
-    const { email, password } = form.getValues();
-
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (!error) {
-      router.push("/");
-    }
+    const credentials = form.getValues();
+    await login(credentials);
   };
 
-  const handleSignup = async (formData) => {
-    const { email, password } = form.getValues();
-
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    if (!error) {
-      router.push("/");
-    }
+  const handleSignup = async (data) => {
+    const credentials = form.getValues();
+    await signup(credentials);
   };
 
   return (
