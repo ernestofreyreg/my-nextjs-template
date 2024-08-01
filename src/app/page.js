@@ -1,3 +1,9 @@
+import { MyLink } from "@/components/MyLink";
+
 export default function Home() {
-  return <div>Home page</div>;
+  return (
+    <div>
+      <MyLink href="/persons">Persons</MyLink>
+    </div>
+  );
 }
