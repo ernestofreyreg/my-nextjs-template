@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function login({ email, password }) {
@@ -10,6 +11,7 @@ export async function login({ email, password }) {
     password,
   });
   if (!error) {
+    revalidatePath("/");
     redirect("/");
   }
 }
@@ -21,6 +23,7 @@ export async function signup({ email, password }) {
     password,
   });
   if (!error) {
+    revalidatePath("/");
     redirect("/");
   }
 }
